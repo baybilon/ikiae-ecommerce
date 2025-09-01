@@ -1,8 +1,5 @@
 // import Image from "next/image";
 
-import configPromise from "@payload-config";
-import { getPayload } from "payload";
-
 // export default function Home() {
 //   return (
 //     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
@@ -106,13 +103,5 @@ import { getPayload } from "payload";
 // }
 
 export default async function Home() {
-  const payload = await getPayload({
-    config: configPromise,
-  });
-
-  const data = await payload.find({
-    collection: "categories",
-  });
-
-  return <div>{JSON.stringify(data, null, 2)}</div>;
+  return <div>Home Page</div>;
 }
