@@ -39,9 +39,11 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ListFilterPlusIcon } from "lucide-react";
 import { CategoriesSidebar } from "./categories-sidebar";
+import { CategoriesGetManyOutput } from "@/modules/categories/type";
 
 interface Props {
-  data: CustomCategory[];
+  // data: CustomCategory[];
+  data: CategoriesGetManyOutput;
 }
 export const Categories = ({ data }: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -94,7 +96,7 @@ export const Categories = ({ data }: Props) => {
       <CategoriesSidebar
         open={isSidebarOpen}
         onOpenChange={setIsSidebarOpen}
-        data={data}
+        // data={data}
       />
       {/* Hidden div */}
       <div

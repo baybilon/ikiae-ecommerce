@@ -9,15 +9,18 @@ import { Button } from "@/components/ui/button";
 
 interface Props {
   disabled?: boolean;
-  data: CustomCategory[];
+  // data: CustomCategory[];
 }
 
-export const SearchInput = ({ disabled, data }: Props) => {
+export const SearchInput = ({
+  disabled,
+  // data
+}: Props) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   return (
     <div className="flex items-center gap-2 w-full">
       <CategoriesSidebar
-        data={data}
+        // data={data}
         open={isSidebarOpen}
         onOpenChange={setIsSidebarOpen}
       />
