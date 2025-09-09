@@ -74,14 +74,18 @@ export const Navbar = () => {
           variant="outline"
           className="border-l border-t-0 border-b-0 border-r-0 px-12 h-full rounded-none hover:bg-yellow-300 transition-colors text-lg"
         >
-          <Link href="/sign-in">Log in</Link>
+          <Link prefetch href="/sign-in">
+            Log in
+          </Link>
         </Button>
         <Button
           asChild
           variant="outline"
           className="border-l border-t-0 border-b-0 border-r-0 px-12 h-full rounded-none bg-black text-white hover:bg-yellow-300 hover:text-black transition-colors text-lg"
         >
-          <Link href="/sign-up">Start selling</Link>
+          <Link prefetch href="/sign-up">
+            Start selling
+          </Link>
         </Button>
       </div>
       <div className="flex lg:hidden sm:visible items-center justify-center">
