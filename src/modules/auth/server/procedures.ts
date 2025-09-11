@@ -3,6 +3,7 @@ import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 import { AUTH_COOKIE } from "../constants";
 import { loginSchemas, registerSchema } from "../schemas";
+import { generateAuthCookies } from "../utils";
 
 export const authRouter = createTRPCRouter({
   session: baseProcedure.query(async ({ ctx }) => {
@@ -11,11 +12,6 @@ export const authRouter = createTRPCRouter({
     const session = await ctx.payload.auth({ headers });
 
     return session;
-  }),
-
-  logout: baseProcedure.mutation(async () => {
-    const cookies = await getCookies();
-    cookies.delete(AUTH_COOKIE);
   }),
 
   register: baseProcedure
@@ -47,6 +43,28 @@ export const authRouter = createTRPCRouter({
           password: input.password,
         },
       });
+
+      const data = await ctx.payload.login({
+        collection: "users",
+        data: {
+          email: input.email,
+          password: input.password,
+        },
+      });
+
+      if (!data.token) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "Failed to login",
+        });
+      }
+
+      await generateAuthCookies({
+        prefix: ctx.payload.config.cookiePrefix,
+        value: data.token,
+      });
+
+      return data;
     }),
 
   login: baseProcedure.input(loginSchemas).mutation(async ({ input, ctx }) => {
@@ -63,15 +81,21 @@ export const authRouter = createTRPCRouter({
         message: "Failed to login",
       });
     }
-    const cookies = await getCookies();
-    cookies.set({
-      name: AUTH_COOKIE,
+    // const cookies = await getCookies();
+    // cookies.set({
+    //   name: `${ctx.payload.config.cookiePrefix}-token`,
+    //   value: data.token,
+    //   httpOnly: true,
+    //   path: "/",
+    //   // sameSite: "none",
+    //   // domain: "",
+    // });
+
+    await generateAuthCookies({
+      prefix: ctx.payload.config.cookiePrefix,
       value: data.token,
-      httpOnly: true,
-      path: "/",
-      // sameSite: "none",
-      // domain: "",
     });
+
     return data;
   }),
 });
