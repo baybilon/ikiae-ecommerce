@@ -17,24 +17,66 @@ import { cn } from "@/lib/utils";
 import { Poppins } from "next/font/google";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useTRPC } from "@/trpc/client";
-import { useMutation } from "@tanstack/react-query";
+// import { useTRPC } from "@/trpc/client";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { trpc } from "@/trpc/server";
+import { useTRPC } from "@/trpc/client";
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["700"],
 });
 
+// export const SignInView = () => {
+//   const router = useRouter();
+//   const trpc = useTRPC();
+//   const login = useMutation(
+//     trpc.auth.login.mutationOptions({
+//       onError: (error) => {
+//         toast.error(error.message);
+//       },
+//       onSuccess: () => {
+//         router.push("/");
+//       },
+//     })
+//   );
+
 export const SignInView = () => {
-  const router = useRouter();
   const trpc = useTRPC();
+  const router = useRouter();
+
+  // const login = useMutation({
+  //   mutationFn: async (values: z.infer<typeof loginSchemas>) => {
+  //     const response = await fetch("/api/users/login", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(values),
+  //     });
+  //     if (!response.ok) {
+  //       const error = await response.json();
+  //       throw new Error(error.message || "Login failed");
+  //     }
+  //   },
+  //   onError: (error) => {
+  //     toast.error(error.message);
+  //   },
+  //   onSuccess: () => {
+  //     router.push("/");
+  //   },
+  // });
+
+  const queryClient = useQueryClient();
+
   const login = useMutation(
     trpc.auth.login.mutationOptions({
       onError: (error) => {
         toast.error(error.message);
       },
-      onSuccess: () => {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(trpc.auth.session.queryFilter());
         router.push("/");
       },
     })
