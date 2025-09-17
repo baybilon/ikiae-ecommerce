@@ -10,7 +10,8 @@ interface Props {
 }
 
 export const formatAsCurrency = (value: string) => {
-  const numericValues = value.replace(/[^0-9.]/g, "");
+  // const numericValues = value.replace(/[^0-9.]/g, "");
+  const numericValues = value.replace(/\D/g, "");
 
   const parts = numericValues.split(".");
   const formattedValue =
@@ -36,12 +37,14 @@ export const PriceFilter = ({
   onMaxPriceChange,
 }: Props) => {
   const handleMinPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const numericValue = e.target.value.replace(/[^0-9.]/g, "");
+    // const numericValue = e.target.value.replace(/[^0-9.]/g, "");
+    const numericValue = e.target.value.replace(/\D/g, "");
     onMinPriceChange(numericValue);
   };
 
   const handleMaxPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const numericValue = e.target.value.replace(/[^0-9.]/g, "");
+    // const numericValue = e.target.value.replace(/[^0-9.]/g, "");
+    const numericValue = e.target.value.replace(/\D/g, "");
     onMaxPriceChange(numericValue);
   };
 
