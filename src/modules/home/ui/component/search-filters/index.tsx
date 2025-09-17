@@ -40,14 +40,14 @@ export const SearchFilters = () => {
       style={{ backgroundColor: activeCategoryColor }}
     >
       <SearchInput />
-      <div className="hidden lg:block">
+      <div className="hidden lg:block ">
         <Categories data={data} />
-        <BreadcrumbNavigation
-          activeCategory={activeCategory}
-          activeCategoryName={activeCategoryName}
-          activeSubcategoryName={activeSubCategoryName}
-        />
       </div>
+      <BreadcrumbNavigation
+        activeCategory={activeCategory}
+        activeCategoryName={activeCategoryName}
+        activeSubcategoryName={activeSubCategoryName}
+      />
     </div>
   );
 };
