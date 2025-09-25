@@ -3,10 +3,12 @@ import { createTRPCRouter } from "../init";
 import { authRouter } from "@/modules/auth/server/procedures";
 import { productsRouter } from "@/modules/products/server/procedures";
 import { tagsRouter } from "@/modules/products/tags/server/procedures";
+import { tenantsRouter } from "@/modules/tenants/server/procedures";
 
 export const appRouter = createTRPCRouter({
   auth: authRouter,
   tags: tagsRouter,
+  tenants: tenantsRouter,
   categories: categoriesRouter,
   products: productsRouter,
 });
