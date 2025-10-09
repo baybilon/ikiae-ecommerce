@@ -29,6 +29,7 @@ export default buildConfig({
     },
     components: {
       beforeNavLinks: ["@/components/stripe-verify"],
+      afterNavLinks: ["@/components/watch-tenant-collection"],
     },
   },
   collections: [
@@ -42,6 +43,21 @@ export default buildConfig({
     Reviews,
   ],
   // cookiePrefix: "IKIAE",
+  // editor: lexicalEditor({
+  //   features: ({ defaultFeatures }) => [
+  //     ...defaultFeatures,
+  //     UploadFeature({
+  //       collections: {
+  //         media: {
+  //           fields: {
+  //             name: "alt",
+  //             type: "text",
+  //           },
+  //         },
+  //       },
+  //     }),
+  //   ],
+  // }),
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
@@ -56,6 +72,7 @@ export default buildConfig({
     multiTenantPlugin({
       collections: {
         products: {},
+        // media: {},
       },
       tenantsArrayField: {
         includeDefaultField: false,
